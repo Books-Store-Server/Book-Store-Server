@@ -92,11 +92,11 @@ class BookStoreController extends Controller
             'author' => 'required',
             'cost' => 'required',
         ]);
-
-        $$book->title = $request->title;
-        $$book->author = $request->author;
-        $$book->cost = $request->cost;
-        $$book->update();
+        $book = BookStore::where('id',$book->id)->first();
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->cost = $request->cost;
+        $book->update();
         return response()->json(['success' => 'Book Updated Successfully In BookStore']);
 
     }
