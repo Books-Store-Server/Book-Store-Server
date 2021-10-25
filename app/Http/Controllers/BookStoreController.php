@@ -50,7 +50,7 @@ class BookStoreController extends Controller
         $book->author = $request->author;
         $book->cost = $request->cost;
         $book->save();
-        return response()->json(['success' => 'Book Save Successfully In BookStore']);
+        return response()->json(['success' => 'Book Save Successfully In BookStore' ,'book'=> $book],200);
     }
 
     /**
