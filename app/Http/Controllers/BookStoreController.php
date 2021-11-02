@@ -14,21 +14,10 @@ class BookStoreController extends Controller
      */
     public function index()
     {
-
-        $books = BookStore::all();
+        $books = BookStore::where('status','is_publish')->get();
         return response()->json($books);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -53,6 +42,34 @@ class BookStoreController extends Controller
         return response()->json(['success' => 'Book Save Successfully In BookStore' ,'book'=> $book],200);
     }
 
+
+
+     /**
+     * Store a newly Gallery resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateGallery(BookStore $book)
+    {
+        //
+        // $request->validate([
+        //     'title' => 'required',
+        //     'author' => 'required',
+        //     'cost' => 'required',
+        // ]);
+
+        // $book = new BookStore();
+        // $book->title = $request->title;
+        // $book->author = $request->author;
+        // $book->cost = $request->cost;
+        // $book->save();
+        // return response()->json(['success' => 'Book Save Successfully In BookStore' ,'book'=> $book],200);
+    }
+
+
+
+
     /**
      * Display the specified resource.
      *
@@ -73,7 +90,7 @@ class BookStoreController extends Controller
      */
     public function edit(BookStore $book)
     {
-        //
+        return response()->json($book);
 
     }
 

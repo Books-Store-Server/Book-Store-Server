@@ -18,6 +18,7 @@ class CreateBookStoresTable extends Migration
             $table->string('title');
             $table->string('author');
             $table->string('cost');
+            $table->string('status')->default('is_pending');
             $table->timestamps();
         });
     }
