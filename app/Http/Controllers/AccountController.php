@@ -31,27 +31,28 @@ class AccountController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
         //generate token from passport
-        $success['token'] =  $user->createToken('MyApp')->accessToken;
-        $success['name'] =  $user->name;
+        $token = $user->createToken('LaravelAuthApp')->plainTextToken;
 
-        return response()->json([$success , 'User register successfully.'],200);
+        return response()->json(['token' => $token], 200);
+
+
     }
 
     /**
-     * Login api
-     *
-     * @return \Illuminate\Http\Response
+     * Login
      */
     public function login(Request $request)
     {
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            $user = Auth::user();
-            $success['token'] =  $user->createToken('MyApp')->accessToken;
-            $success['name'] =  $user->name;
-            return response()->json([$success, 'User login successfully.'],200);
-        }
-        else{
-            return response()->json('Unauthorised.', ['error'=>'Unauthorised']);
+        $data = [
+            'email' => $request->email,
+            'password' => $request->password
+        ];
+
+        if (auth()->attempt($data)) {
+            $token = auth()->user()->createToken('LaravelAuthApp')->plainTextToken;
+            return response()->json(['token' => $token], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
         }
     }
 }
