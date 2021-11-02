@@ -32,8 +32,9 @@ class AccountController extends Controller
         $user->save();
         //generate token from passport
         $token = $user->createToken('LaravelAuthApp')->plainTextToken;
+        $parts = explode('|',$token);
 
-        return response()->json(['token' => $token], 200);
+        return response()->json(['token' => $parts[1]], 200);
 
 
     }
@@ -50,9 +51,10 @@ class AccountController extends Controller
 
         if (auth()->attempt($data)) {
             $token = auth()->user()->createToken('LaravelAuthApp')->plainTextToken;
-            return response()->json(['token' => $token], 200);
+            $parts = explode('|',$token);
+            return response()->json(['token' => $parts[1]], 200);
         } else {
-            return response()->json(['error' => 'Unauthorised'], 401);
+            return response()->json(['error' => 'Credentials not match our records'], 401);
         }
     }
 }
